@@ -76,7 +76,7 @@ public class VendorControllerTest {
         Mono<Vendor> vendorToUpdateMono = Mono.just(Vendor.builder().firstName("Some Cat").build());
 
         webTestClient.put()
-                .uri("/api/v1/vendor/asdfasdf")
+                .uri("/api/v1/vendors/asdfasdf")
                 .body(vendorToUpdateMono, Vendor.class)
                 .exchange()
                 .expectStatus()
