@@ -1,5 +1,6 @@
 package guru.springframework.spring5webfluxrest.controllers;
 
+import guru.springframework.spring5webfluxrest.domain.Category;
 import guru.springframework.spring5webfluxrest.domain.Vendor;
 import guru.springframework.spring5webfluxrest.repositories.VendorRepository;
 import org.junit.Before;
@@ -65,5 +66,20 @@ public class VendorControllerTest {
                 .exchange()
                 .expectStatus()
                 .isCreated();
+    }
+
+    @Test
+    public void TestUpdate() {
+        BDDMockito.given(vendorRepository.save(any(Vendor.class)))
+                .willReturn(Mono.just(Vendor.builder().build()));
+
+        Mono<Vendor> vendorToUpdateMono = Mono.just(Vendor.builder().firstName("Some Cat").build());
+
+        webTestClient.put()
+                .uri("/api/v1/vendor/asdfasdf")
+                .body(vendorToUpdateMono, Vendor.class)
+                .exchange()
+                .expectStatus()
+                .isOk();
     }
 }
